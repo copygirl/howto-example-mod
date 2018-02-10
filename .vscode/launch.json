@@ -1,0 +1,28 @@
+{
+	"version": "0.2.0",
+	"configurations": [{
+		"name": "Launch Client (Mono)",
+		"type": "mono",
+		"request": "launch",
+		"preLaunchTask": "build (Debug)",
+		"program": "${env:VINTAGE_STORY}/Vintagestory.exe",
+		"args": [
+			"-p3", "--openWorld", "modding test world.vcdbs",
+			"--addOrigin", "${workspaceFolder}/resources/assets",
+		],
+		"console": "internalConsole",
+		"internalConsoleOptions": "openOnSessionStart",
+	},{
+		"name": "Launch Client (.NET)",
+		"type": "clr",
+		"request": "launch",
+		"preLaunchTask": "build (Debug)",
+		"program": "${env:VINTAGE_STORY}/Vintagestory.exe",
+		"args": [
+			"-p3", "--openWorld", "modding test world.vcdbs",
+			"--addOrigin", "${workspaceFolder}/resources/assets"
+		],
+		"console": "internalConsole",
+		"internalConsoleOptions": "openOnSessionStart",
+	}]
+}

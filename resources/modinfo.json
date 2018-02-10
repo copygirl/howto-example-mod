@@ -1,0 +1,9 @@
+{
+	"type": "core",
+	"name": "HowtoExample",
+	"description" : "An example mod using VS Code and .NET Core",
+	"website": "https://github.com/copygirl/VSModHowto",
+	"author": "copygirl",
+	"version": "1.0.0",
+	"gameversions": [ "1.5.0.4+" ]
+}
