@@ -1,5 +1,5 @@
 {
-	"type": "core",
+	"type": "code",
 	"name": "HowtoExample",
 	"description" : "An example mod using VS Code and .NET Core",
 	"website": "https://github.com/copygirl/VSModHowto",
