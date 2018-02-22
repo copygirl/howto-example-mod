@@ -115,6 +115,37 @@ and `.pdb`, which contains information for the debugger, into the user data's
 `Mods` directory. Though, we only want to do this when we're creating a debug
 build.
 
+### General VS Code suggestions and Cheat Sheet
+
+At this point you have everything set up to start writing some code, so here
+are some basic things to get you set up.
+
+First of all, one of the issues you might encounter is code completion not
+working properly. This is likely because you have created the project after
+the C# extension has started up. To fix that, press `F1` to open the
+**Command Palette** and enter "Reload Window".
+
+This time OmniSharp should recognize the project, and you can open the
+"Output" window to verify this. There's a lot of ways to get to it, including
+the command palette (search for "Toggle Output" this time), just make sure
+you have "OmniSharp Log" selected in the dropdown:
+
+![OmniSharp Output Log](docs/omnisharp.png)
+
+Next up, if you already know the type names you want to use, but not which
+namespace they're residing in, or you don't want to bother manually importing
+them, simply write the type name and pay attention to the **Quick Fix** bulb
+to the left, which you can either click or press `Ctrl+.`to get to:
+
+![Quick Fix Using](docs/using.png)
+
+Also, on a right click you have the option of **Go to Definiton** (`F12`) and
+**Rename Symbol** (`F2`) which are two other things I end up using a lot. The
+former can also be used to see which methods are available on an API type to
+which you don't have source access to.
+
+![Right Click](docs/rightclick.png)
+
 ### Working with multiple Mods
 
 You can also set up a workspace that includes multiple different mods and
