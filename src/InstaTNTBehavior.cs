@@ -1,4 +1,3 @@
-using System;
 using Vintagestory.API.Common;
 using Vintagestory.API.Server;
 
@@ -11,7 +10,7 @@ namespace HowtoExample
 		public InstaTNTBehavior(Block block)
 			: base(block) {  }
 		
-		public override bool OnPlayerPlacedBlockInteract(
+		public override bool OnPlayerBlockInteract(
 			IWorldAccessor world, IPlayer byPlayer,
 			BlockSelection blockSel, ref EnumHandling handling)
 		{
