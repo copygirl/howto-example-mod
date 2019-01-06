@@ -10,7 +10,7 @@ namespace HowtoExample
 		public InstaTNTBehavior(Block block)
 			: base(block) {  }
 		
-		public override bool OnPlayerBlockInteract(
+		public override bool OnBlockInteractStart(
 			IWorldAccessor world, IPlayer byPlayer,
 			BlockSelection blockSel, ref EnumHandling handling)
 		{
