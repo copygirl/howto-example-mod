@@ -6,7 +6,7 @@ modding enviroment for the creation of mods for the block-based sandbox game
 
 ![Overview](docs/overview.png)
 
-This how-to was last updated for Vintage Story version 1.5.0.4 but will
+This how-to was last updated for Vintage Story version 1.8.0 but will
 hopefully continue working in the future.
 
 ## Why .NET Core?
@@ -41,9 +41,9 @@ bloat, in a modern look.
 - Install the [C# extension][cs-ext] from the "Extensions" tab in VS Code.
 - If you run on Mono, install the [Mono Debug][mono-ext] extension.
 
-If you're on Arch Linux, like me, you can get the .NET Core SDK by installing
-the official package `dotnet-sdk` and VS Code by getting the [AUR][AUR]
-package [`code`][vscode-aur].
+If you're on Arch Linux like me, you can get the game using the [AUR][AUR]
+package [`vintagestory`][VS-AUR] (created by me), and the .NET Core SDK and
+VS Code by installing the official packages `dotnet-sdk` and `code`.
 
 I also recommend setting up two environmental variables. This will just make
 things a little more consistent across different platforms and setups, and
@@ -68,15 +68,15 @@ Create and open a new folder in VS Code!
 
 ### Directory structure
 
-- **root**: This is mainly where our `.csproj` file will reside, but other
-  files are going to end up here, such as `.gitignore` if you're using Git,
-  the readme, license, ...
-- `src/`: Contains all source files (`.cs`) for our mod. This is what
+- `./`: The root folder is mainly where our `.csproj` file will reside, but
+  other files are going to end up here, such as `.gitignore` if you're using
+  Git, the readme, license, ...
+- `./src/`: Contains all source (`.cs`) files for our mod. This is what
   makes this a code mod over a simple content mod, which just contains
   assets. More on this destinction on the [official wiki][VS-wiki].
-- `resources/`: This directory contains all files which will eventually
-  be included in the release `.zip` file.
-- `resources/assets/`: Contains all assets for our mod. Unlike some other
+- `./resources/`: This directory contains all files which will eventually
+  be included in the release `.zip` file such as the `modinfo.json`.
+- `./resources/assets/`: Contains all assets for our mod. Unlike some other
   games (*cough* Minecraft *cough*), a lot of the heavy lifting will
   already be done by the asset loading portion of the engine.
 
@@ -108,7 +108,7 @@ you can add for the sake of completion, but these are not required.
 
 You can also see us adding a reference to the modding API `.dll`. If you need
 to reference base game content in your mod you may also want to include
-`$(VINTAGE_STORY)/Mods/VSSurvivalMod.dll`.
+`$(VINTAGE_STORY)/Mods/VSEssentials.dll` and `VSSurvivalMod.dll`.
 
 Lastly, we're setting up a post-build task to copy our mod's resulting `.dll`
 and `.pdb`, which contains information for the debugger, into the user data's
@@ -259,11 +259,11 @@ display the exact line number at which it occured in your code.
 
 [VS]: https://www.vintagestory.at/
 [VS-wiki]: http://wiki.vintagestory.at/
-[dotnet]: https://www.microsoft.com/net/
-[dotnet-dl]: https://www.microsoft.com/net/download
+[VS-AUR]: https://aur.archlinux.org/packages/vintagestory
+[dotnet]: https://dotnet.microsoft.com/
+[dotnet-dl]: https://dotnet.microsoft.com/download
 [vscode]: https://code.visualstudio.com/
 [vscode-dl]: https://code.visualstudio.com/Download
-[vscode-aur]: https://aur.archlinux.org/packages/code/
 [cs-ext]: https://marketplace.visualstudio.com/items?itemName=ms-vscode.csharp
 [mono-ext]: https://marketplace.visualstudio.com/items?itemName=ms-vscode.mono-debug
 [AUR]: https://wiki.archlinux.org/index.php/Arch_User_Repository
