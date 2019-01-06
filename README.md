@@ -45,28 +45,32 @@ If you're on Arch Linux like me, you can get the game using the [AUR][AUR]
 package [`vintagestory`][VS-AUR] (created by me), and the .NET Core SDK and
 VS Code by installing the official packages `dotnet-sdk` and `code`.
 
-I also recommend setting up two environmental variables. This will just make
-things a little more consistent across different platforms and setups, and
-it's what I will use, but it's not required. However, if you leave this out,
-do make sure to update the appropriate files with absolute paths
+### Environment Variables
+
+I also recommend setting up two environmental variables:
 
 - `VINTAGE_STORY`, which points to the where the game is installed.
 - `VINTAGE_STORY_DATA`, pointing to the user data directory.  
   This is where world files go and also where we'll put our mods.
 
-Here is the relevant lines from my `~/.xprofile`:
+Here are the relevant lines from my `~/.xprofile`:
 
 ```sh
 export VINTAGE_STORY=/usr/share/vintagestory
 export VINTAGE_STORY_DATA=$HOME/.config/VintagestoryData
 ```
 
+This will just make things more consistent across different platforms and
+setups, and it's what I will use in this repository and how-to, but it's not
+required. However, if you decide to leave this out, do make sure to update
+any occurances in the `.csproj` and `launch.json` with absolute paths.
+
 ## Project Setup
 
 Now that we're done with that, it's time to set up the project structure.
 Create and open a new folder in VS Code!
 
-### Directory structure
+### Directory Structure
 
 - `./`: The root folder is mainly where our `.csproj` file will reside, but
   other files are going to end up here, such as `.gitignore` if you're using
