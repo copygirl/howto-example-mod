@@ -86,7 +86,7 @@ Create and open a new folder in VS Code!
 
 ### Project File
 
-Create a `.csproj` file for our project along these lines:
+Create a `<project name>.csproj` file for our project along these lines:
 
 ```xml
 <Project Sdk="Microsoft.NET.Sdk">
