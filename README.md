@@ -107,8 +107,9 @@ Create a `.csproj` file for our project along these lines:
 </Project>
 ```
 
-As seen in my [TestMod's project file][testmod-csproj], there are more fields
-you can add for the sake of completion, but these are not required.
+As for example seen in [CarryCapacity's project file][carrycapacity-csproj],
+there are more fields you can include for the sake of completion, but these
+are not strictly required.
 
 You can also see us adding a reference to the modding API `.dll`. If you need
 to reference base game content in your mod you may also want to include
@@ -271,5 +272,5 @@ display the exact line number at which it occured in your code.
 [cs-ext]: https://marketplace.visualstudio.com/items?itemName=ms-vscode.csharp
 [mono-ext]: https://marketplace.visualstudio.com/items?itemName=ms-vscode.mono-debug
 [AUR]: https://wiki.archlinux.org/index.php/Arch_User_Repository
-[testmod-csproj]: https://github.com/copygirl/TestMod/blob/master/TestMod.csproj
+[carrycapacity-csproj]: https://github.com/copygirl/CarryCapacity/blob/master/CarryCapacity.csproj
 [VSMods-github]: https://github.com/copygirl/VintageStoryMods
