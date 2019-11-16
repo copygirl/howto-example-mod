@@ -224,7 +224,8 @@ code.
     "preLaunchTask": "build (Debug)",
     "program": "${env:VINTAGE_STORY}/Vintagestory.exe",
     "args": [
-      "-p3", "--openWorld", "modding test world.vcdbs",
+      "--playstyle=\"surviveandbuild\"",
+      "--openWorld=\"modding test world.vcdbs\"",
       "--addOrigin", "${workspaceFolder}/resources/assets"
     ],
     "console": "internalConsole",
@@ -241,10 +242,10 @@ plaforms.
 
 These are the arguments we're passing to the game:
 
-- `-p3`: The world preset, if it doesn't exist yet.
-  `1` = normal / survival. `3` = superflat / creative.
-- `--openWorld <name>`: Open or create a world with the specified name.
-- `--addOrigin <directory> [...]`: Load assets from the these directories.
+- `--playstyle`: The world configuration preset. Only used if it doesn't exist yet.  
+  `surviveandbuild` = normal / survival. `creativebuilding` = superflat / creative.
+- `--openWorld`: Open or create a world with the specified name.
+- `--addOrigin`: Load assets from one or multiple directories.
 
 You should now be able to run the game in debug mode with your mod by simply
 selecting the appropriate launcher by pressing on "Launch Client" to the
