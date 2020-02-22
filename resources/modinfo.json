@@ -5,7 +5,7 @@
 	"version": "1.2.0",
 	
 	"description" : "An example mod using VS Code and .NET Core",
-	"website": "https://github.com/copygirl/VSModHowto",
+	"website": "https://github.com/copygirl/howto-example-mod",
 	"authors": [ "copygirl" ],
 	
 	"dependencies": {

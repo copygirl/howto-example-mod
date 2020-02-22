@@ -4,7 +4,7 @@ using Vintagestory.API.Server;
 
 [assembly: ModInfo( "HowtoExample",
 	Description = "An example mod using VS Code and .NET Core",
-	Website     = "https://github.com/copygirl/VSModHowto",
+	Website     = "https://github.com/copygirl/howto-example-mod",
 	Authors     = new []{ "copygirl" } )]
 
 namespace HowtoExample
