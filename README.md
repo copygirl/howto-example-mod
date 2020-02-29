@@ -224,8 +224,8 @@ code.
     "preLaunchTask": "build (Debug)",
     "program": "${env:VINTAGE_STORY}/Vintagestory.exe",
     "args": [
-      "--playstyle=\"surviveandbuild\"",
-      "--openWorld=\"modding test world.vcdbs\"",
+      "--playstyle", "surviveandbuild",
+      "--openWorld", "modding test world",
       "--addOrigin", "${workspaceFolder}/resources/assets"
     ],
     "console": "internalConsole",
