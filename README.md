@@ -44,7 +44,7 @@ export VINTAGE_STORY=/usr/share/vintagestory
 export VINTAGE_STORY_DATA=$HOME/.config/VintagestoryData
 ```
 
-If you're on another operating system, I suggest you search online how to set environment variables, as it's not straight forward. On Windows, the paths can be set to be `%AppData%\Vintagestory` and `%AppData\VintagestoryData`.
+If you're on another operating system, I suggest you search online how to set environment variables, as it's not straight forward. On Windows, the paths can be set to be `%AppData%\Vintagestory` and `%AppData%\VintagestoryData`.
 
 This will just make things more consistent across different platforms and setups, and it's what I will use in this repository and how-to, but it's not required. However, if you decide to leave this out, do make sure to update any occurances in the `.csproj` and `launch.json` with absolute paths.
 
