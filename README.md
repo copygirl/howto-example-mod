@@ -131,10 +131,10 @@ For this we need two things: First, a `.vscode/tasks.json` file, in which we'll 
     "presentation": { "reveal": "silent" },
     "problemMatcher": "$msCompile",
     
-    "type": "shell",
+    "type": "process",
     "command": "dotnet",
-    "linux": { "options": { "env": { "FrameworkPathOverride": "/lib/mono/4.5.2-api/" } } },
-    "args": [ "build", "-c", "Debug" ]
+    "args": [ "build", "-c", "Debug" ],
+    "linux": { "options": { "env": { "FrameworkPathOverride": "/lib/mono/4.5.2-api/" } } }
   }]
 }
 ```
@@ -157,7 +157,7 @@ To make this work, you'll either have to create a `.zip` file for the game to lo
     "preLaunchTask": "build (Debug)",
     "program": "${env:VINTAGE_STORY}/Vintagestory.exe",
     "args": [
-      "--playstyle", "surviveandbuild",
+      "--playStyle", "surviveandbuild",
       "--openWorld", "modding test world",
       "--addOrigin", "${workspaceFolder}/resources/assets"
     ],
@@ -171,7 +171,7 @@ Note that if you're using **.NET on Windows**, you need to replace `type` with `
 
 These are the arguments we're passing to the game:
 
-- `--playstyle`: The world configuration preset. Only used if it doesn't exist yet.  
+- `--playStyle`: The world configuration preset. Only used if it doesn't exist yet.  
   `surviveandbuild` = normal / survival. `creativebuilding` = superflat / creative.
 - `--openWorld`: Open or create a world with the specified name.
 - `--addOrigin`: Load assets from one or multiple directories.

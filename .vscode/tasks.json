@@ -6,19 +6,19 @@
 		"presentation": { "reveal": "silent" },
 		"problemMatcher": "$msCompile",
 		
-		"type": "shell",
+		"type": "process",
 		"command": "dotnet",
-		"linux": { "options": { "env": { "FrameworkPathOverride": "/lib/mono/4.5.2-api/" } } },
-		"args": [ "build", "-c", "Debug" ]
+		"args": [ "build", "-c", "Debug" ],
+		"linux": { "options": { "env": { "FrameworkPathOverride": "/lib/mono/4.5.2-api/" } } }
 	},{
 		"label": "build (Release)",
 		"group": "build",
 		"presentation": { "reveal": "silent" },
 		"problemMatcher": "$msCompile",
 		
-		"type": "shell",
+		"type": "process",
 		"command": "dotnet",
-		"linux": { "options": { "env": { "FrameworkPathOverride": "/lib/mono/4.5.2-api/" } } },
-		"args": [ "build", "-c", "Release" ]
+		"args": [ "build", "-c", "Release" ],
+		"linux": { "options": { "env": { "FrameworkPathOverride": "/lib/mono/4.5.2-api/" } } }
 	}]
 }
