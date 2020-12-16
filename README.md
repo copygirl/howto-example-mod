@@ -52,6 +52,10 @@ This will just make things more consistent across different platforms and setups
 
 Now that we're done with that, it's time to set up the project structure. Create and open a new folder in VS Code!
 
+OmniSharp gets a bit confused with Mono so if you see the following error, open your user or workspace settings (press `F1` and search for "user / workspace settings") and set "Omnisharp: Use Global Mono" to "always".
+
+> The reference assemblies for .NETFramework,Version=v4.5.2 were not found. To resolve this, install the Developer Pack (SDK/Targeting Pack) for this framework version or retarget your application.
+
 ### Directory Structure
 
 - `./`: The root folder is mainly where our `.csproj` file will reside, but other files are going to end up here, such as `.gitignore` if you're using Git, the readme, license, ...
@@ -133,15 +137,12 @@ For this we need two things: First, a `.vscode/tasks.json` file, in which we'll 
     
     "type": "process",
     "command": "dotnet",
-    "args": [ "build", "-c", "Debug" ],
-    "linux": { "options": { "env": { "FrameworkPathOverride": "/lib/mono/4.5.2-api/" } } }
+    "args": [ "build", "-c", "Debug" ]
   }]
 }
 ```
 
 The default `build` task can be run by pressing `Ctrl+Shift+B`. Other tasks may be run by pressing `F1`, typing `task` and selecting "Run Task" option, which may be useful if you configure any custom tasks, such as ones to create a release `.zip` file.
-
-As you can see there is a platform specific option, which sets the environment variable `FrameworkPathOverride`. This might not be needed in your linux environment, or might need to be changed to point to where your Mono installation's .NET 4.5.2 reference assemblies are located.
 
 If you run the `build (Debug)` task and start the game afterwards, you may be able to see that the mod is actually appearing in the Mod Manager in-game already, assuming everything went according to plan. Unfortunately, you'll find that none of your custom assets have been loaded in the game.
 
