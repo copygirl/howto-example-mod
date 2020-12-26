@@ -76,22 +76,16 @@ Create a `<project name>.csproj` file for our project along these lines:
   <ItemGroup>
     <Reference Include="VintagestoryAPI">
       <HintPath>$(VINTAGE_STORY)/VintagestoryAPI.dll</HintPath>
+      <Private>false</Private>
     </Reference>
   </ItemGroup>
-  
-  <Target Name="Copy" AfterTargets="PostBuildEvent" Condition="'$(Configuration)' == 'Debug'">
-    <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(VINTAGE_STORY_DATA)/Mods" />
-    <Copy SourceFiles="$(TargetDir)/$(TargetName).pdb" DestinationFolder="$(VINTAGE_STORY_DATA)/Mods" />
-  </Target>
 </Project>
 ```
 
 As for example seen in [CarryCapacity's project file][carrycapacity-csproj], there are more fields you can include for the sake of completion, but these
 are not strictly required.
 
-You can also see us adding a reference to the modding API `.dll`. If you need to reference base game content in your mod you may also want to include `$(VINTAGE_STORY)/Mods/VSEssentials.dll` and `VSSurvivalMod.dll`.
-
-Lastly, we're setting up a post-build task to copy our mod's resulting `.dll` and `.pdb`, which contains information for the debugger, into the user data's `Mods` directory. Though, we only want to do this when we're creating a debug build.
+You can also see us adding a reference to the modding API `.dll`. If you need to reference base game content in your mod you may also want to include `$(VINTAGE_STORY)/Mods/VSEssentials.dll` and `VSSurvivalMod.dll`. Setting `<Private>false</Private>` means that the API `.dll` will not be copied to the output folder, which could cause issues.
 
 ### General VS Code suggestions and Cheat Sheet
 
@@ -160,7 +154,8 @@ To make this work, you'll either have to create a `.zip` file for the game to lo
     "args": [
       "--playStyle", "surviveandbuild",
       "--openWorld", "modding test world",
-      "--addOrigin", "${workspaceFolder}/resources/assets"
+			"--addModPath", "${workspaceFolder}/bin/Debug/net452",
+      "--addOrigin", "${workspaceFolder}/resources/assets",
     ],
     "console": "internalConsole",
     "internalConsoleOptions": "openOnSessionStart",
@@ -175,6 +170,7 @@ These are the arguments we're passing to the game:
 - `--playStyle`: The world configuration preset. Only used if it doesn't exist yet.  
   `surviveandbuild` = normal / survival. `creativebuilding` = superflat / creative.
 - `--openWorld`: Open or create a world with the specified name.
+- `--addModPath`: Additional paths that the game will search for mods from.
 - `--addOrigin`: Load assets from one or multiple directories.
 
 You should now be able to run the game in debug mode with your mod by simply selecting the appropriate launcher by pressing on "Launch Client" to the left of the bottom status bar in VS Code. When you've done this once, you can also run the last used launcher by pressing `F5`.

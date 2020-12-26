@@ -9,6 +9,7 @@
 		"args": [
 			"--playStyle", "surviveandbuild",
 			"--openWorld", "modding test world",
+			"--addModPath", "${workspaceFolder}/bin/Debug/net452",
 			"--addOrigin", "${workspaceFolder}/resources/assets",
 		],
 		"console": "internalConsole",
@@ -22,7 +23,8 @@
 		"args": [
 			"--playStyle", "surviveandbuild",
 			"--openWorld", "modding test world",
-			"--addOrigin", "${workspaceFolder}/resources/assets"
+			"--addModPath", "${workspaceFolder}/bin/Debug/net452",
+			"--addOrigin", "${workspaceFolder}/resources/assets",
 		],
 		"console": "internalConsole",
 		"internalConsoleOptions": "openOnSessionStart",
