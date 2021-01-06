@@ -1,33 +1,33 @@
-# How to set up Vintage Story modding with VS Code and .NET Core tools
+# How to set up Vintage Story modding with VS Code and .NET tools
 
-This repository will attempt to explain and demonstrate how to set up a modding enviroment for the creation of mods for the block-based sandbox game [Vintage Story][VS] using the [.NET Core SDK][dotnet] and [Visual Studio Code][vscode].
+This repository will attempt to explain and demonstrate how to set up a modding enviroment for the creation of mods for the block-based sandbox game [Vintage Story][VS] using the [.NET SDK][dotnet] and [VS Code][vscode].
 
 ![Overview](docs/overview.png)
 
-This how-to was last updated for Vintage Story version 1.12 but will hopefully continue working in the future.
+This how-to was last updated for Vintage Story version 1.14 but will hopefully continue working in the future.
 
-## Why .NET Core?
+## Why .NET?
 
-Vintage Story is built against .NET 4.5.2 and runs using Mono on platforms other than Windows, so why are we using .NET Core?
+Vintage Story is built against .NET Framework 4.5.2 and runs using Mono on platforms other than Windows. Why are we using .NET?
 
-- It's **cross-platform**. We don't need to change our tooling or commands to work on different platforms. I've moved from Windows to Linux while working on Vintage Story mods here and there and only needed to make minor changes to also make it work on another platform.
-- It's **convenient**. As .NET Core comes with commands to manipulate, create and build solution and project files, we don't need to rely on IDEs. The newer `.csproj` file format doesn't require referencing every single `.cs` file, either.
+- It's **cross-platform**. With .NET 5, the successor of .NET Core, we don't need to change our tooling or commands to work on different platforms. I've moved from Windows to Linux while working on Vintage Story mods and only needed to make minor changes to also make it work on another platform.
+- It's **convenient**. As the .NET SDK comes with the `dotnet` command to manipulate, create and build project and solution files, we don't need to rely on IDEs. The newer `.csproj` file format doesn't require referencing every single `.cs` file, either.
 
 ## Why Visual Studio Code?
 
 Despite what its name might imply, this has nothing to do with the overblown IDE that is Visual Studio. It's a relatively light-weight, cross-platform code editor that comes with syntax highlighting, code completion, source control integration, debugging tools, ...
 
-Essentially you get all the IDE features you're used without any of the bloat, in a modern look.
+Essentially you get most of the IDE features you're used without any of the bloat, in a modern look.
 
 ## Prerequisites
 
 - Get the [game][VS].
-- Install the [.NET Core SDK][dotnet-dl].
+- Install the [.NET SDK][dotnet-dl].
 - Install [Visual Studio Code][vscode-dl].
 - Install the [C# extension][cs-ext] from the "Extensions" tab in VS Code.
 - If you run on Mono, install the [Mono Debug][mono-ext] extension.
 
-If you're on Arch Linux like me, you can get the game using the [AUR][AUR] package [`vintagestory`][VS-AUR] (created by me), and the .NET Core SDK and VS Code by installing the official packages `dotnet-sdk` and `code`.
+If you're on Arch Linux like me, you can get the game using the [AUR][AUR] package [`vintagestory`][VS-AUR] (created by me), and the .NET SDK and VS Code by installing the official packages `dotnet-sdk` and `code`.
 
 ### Environment Variables
 
@@ -65,27 +65,45 @@ OmniSharp gets a bit confused with Mono so if you see the following error, open 
 
 ### Project File
 
-Create a `<project name>.csproj` file for our project along these lines:
+Copy the [`.csproj`](HowtoExample.csproj) from this repository into your project folder, and rename it. It contains the minimum requirements for the project to build and a release to be created.
+
+As for example seen in [CarryCapacity's project file][carrycapacity-csproj], there are more fields you can include for the sake of completion, but these are not strictly required.
+
+#### References
 
 ```xml
-<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <TargetFramework>net452</TargetFramework>
-  </PropertyGroup>
-  
-  <ItemGroup>
-    <Reference Include="VintagestoryAPI">
-      <HintPath>$(VINTAGE_STORY)/VintagestoryAPI.dll</HintPath>
-      <Private>false</Private>
-    </Reference>
-  </ItemGroup>
-</Project>
+<Reference Include="VintagestoryAPI">
+  <HintPath>$(VINTAGE_STORY)/VintagestoryAPI.dll</HintPath>
+  <Private>false</Private>
+</Reference>
 ```
 
-As for example seen in [CarryCapacity's project file][carrycapacity-csproj], there are more fields you can include for the sake of completion, but these
-are not strictly required.
+Here, we're adding a reference to the modding API `.dll`. In [the example's .csproj](HowtoExample.csproj) you can see some additional commented-out references, which you can use to include the official base mods (essentials, survival and creative) if your code needs them.
 
-You can also see us adding a reference to the modding API `.dll`. If you need to reference base game content in your mod you may also want to include `$(VINTAGE_STORY)/Mods/VSEssentials.dll` and `VSSurvivalMod.dll`. Setting `<Private>false</Private>` means that the API `.dll` will not be copied to the output folder, which could cause issues.
+Setting `<Private>false</Private>` means that this `.dll` will not be copied to the output folder, as we don't want them to be included in our releases.
+
+#### Releases
+
+```xml
+<ItemGroup Condition="'$(Configuration)' == 'Release'">
+  <None Include="UNLICENSE" />
+  <None Include="resources/**">
+    <Link>%(RecursiveDir)%(Filename)%(Extension)</Link>
+  </None>
+</ItemGroup>
+```
+
+This causes additional files to be included in the output folder (`bin/debug/net452/`) when building the project in release configuration. As you can see, you can use this to include a license file as well - remove or change this as needed for your own project. Then, we also want to include the contents of the `resources` folder.
+
+```xml
+<Target Name="Package" AfterTargets="PostBuildEvent" Condition="'$(Configuration)' == 'Release'">
+  <ZipDirectory DestinationFile="bin/$(TargetName).zip" SourceDirectory="$(TargetDir)" Overwrite="true" />
+</Target>
+```
+
+This packs all the files in the output folder into a single `.zip` file for you to release.
+
+To build the mod in release configuration, run `dotnet build -c Release` or the "Build (Release)" task that I show you how to set up further below.
 
 ### General VS Code suggestions and Cheat Sheet
 
@@ -106,14 +124,6 @@ Also, on a right click you have the option of **Go to Definiton** (`F12`) and **
 
 ![Right Click](docs/rightclick.png)
 
-### Working with multiple Mods
-
-You can also set up a workspace that includes multiple different mods and have a single build task to compile all sub-projects and launcher to start the game with all mods loaded.
-
-Feel free to take inspiration from my [VintageStoryMods][VSMods-github] repository until I've updated this section to include more information.
-
-**TODO:** Expand on this and explain `dotnet` CLI commands for manipulating solution files (`.sln`).
-
 ## Tasks and Launchers
 
 After you've gotten familiar with some resources on how to create your mod, either from looking at the [Vintage Story Wiki][VS-wiki] or taking inspiration from other open source mods, it is time to actually build and launch it in the game.
@@ -124,7 +134,7 @@ For this we need two things: First, a `.vscode/tasks.json` file, in which we'll 
 {
   "version": "2.0.0",
   "tasks": [{
-    "label": "build (Debug)",
+    "label": "Build (Debug)",
     "group": { "kind": "build", "isDefault": true },
     "presentation": { "reveal": "silent" },
     "problemMatcher": "$msCompile",
@@ -132,15 +142,23 @@ For this we need two things: First, a `.vscode/tasks.json` file, in which we'll 
     "type": "process",
     "command": "dotnet",
     "args": [ "build", "-c", "Debug" ]
+  },{
+    "label": "Build (Release)",
+    "group": "build",
+    "presentation": { "reveal": "silent" },
+    "problemMatcher": "$msCompile",
+    
+    "type": "process",
+    "command": "dotnet",
+    "args": [ "build", "-c", "Release" ]
   }]
 }
+
 ```
 
-The default `build` task can be run by pressing `Ctrl+Shift+B`. Other tasks may be run by pressing `F1`, typing `task` and selecting "Run Task" option, which may be useful if you configure any custom tasks, such as ones to create a release `.zip` file.
+The default `build` task can be run by pressing `Ctrl+Shift+B`. Other tasks may be run by pressing `F1` and typing "Run Task".
 
-If you run the `build (Debug)` task and start the game afterwards, you may be able to see that the mod is actually appearing in the Mod Manager in-game already, assuming everything went according to plan. Unfortunately, you'll find that none of your custom assets have been loaded in the game.
-
-To make this work, you'll either have to create a `.zip` file for the game to load (more on this later) or you tell the game to load from your mod's existing `assets` directory. For this, we'll create a **launcher**. The upside of this approach is that we can also hook a debugger into the game, allowing us to use breakpoints and debug exceptions originating from our code.
+To run the game and make it load our new mod, we'll create a **launcher**. This way, we can also hook the debugger into the game, allowing us to use breakpoints and debug exceptions originating from our code.
 
 ```json
 {
@@ -149,18 +167,19 @@ To make this work, you'll either have to create a `.zip` file for the game to lo
     "name": "Launch Client",
     "type": "mono",
     "request": "launch",
-    "preLaunchTask": "build (Debug)",
+    "preLaunchTask": "Build (Debug)",
     "program": "${env:VINTAGE_STORY}/Vintagestory.exe",
     "args": [
-      "--playStyle", "surviveandbuild",
-      "--openWorld", "modding test world",
-			"--addModPath", "${workspaceFolder}/bin/Debug/net452",
-      "--addOrigin", "${workspaceFolder}/resources/assets",
+      "--playStyle" , "surviveandbuild",
+      "--openWorld" , "modding test world",
+      "--addModPath", "${workspaceFolder}/bin/Debug/net452",
+      "--addOrigin" , "${workspaceFolder}/resources/assets",
     ],
     "console": "internalConsole",
     "internalConsoleOptions": "openOnSessionStart",
   }]
 }
+
 ```
 
 Note that if you're using **.NET on Windows**, you need to replace `type` with `"clr"`. In this project's [launch.json](.vscode/launch.json) you'll find that I've created two launchers: One for .NET, and one for Mono. You may choose to do this as well to ensure your project can be run from multiple plaforms.
@@ -174,12 +193,6 @@ These are the arguments we're passing to the game:
 - `--addOrigin`: Load assets from one or multiple directories.
 
 You should now be able to run the game in debug mode with your mod by simply selecting the appropriate launcher by pressing on "Launch Client" to the left of the bottom status bar in VS Code. When you've done this once, you can also run the last used launcher by pressing `F5`.
-
-## Release
-
-To create a release `.zip` of your mod, simply package the `.dll` file from `bin/Release` as well as the contents of the `resources` directory. Optionally you may include the `.pdb` file, which contains debug symbols not necessary to run the mod, but can be useful, as it allows exceptions to display the exact line number at which it occured in your code.
-
-**TODO:** Include a task to do this automatically.
 
 
 [VS]: https://www.vintagestory.at/
