@@ -86,9 +86,10 @@ Setting `<Private>false</Private>` means that this `.dll` will not be copied to 
 
 ```xml
 <ItemGroup Condition="'$(Configuration)' == 'Release'">
-  <None Include="UNLICENSE" />
+  <None Include="UNLICENSE" CopyToOutputDirectory="PreserveNewest" />
   <None Include="resources/**">
     <Link>%(RecursiveDir)%(Filename)%(Extension)</Link>
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
   </None>
 </ItemGroup>
 ```
