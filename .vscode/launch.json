@@ -7,7 +7,7 @@
 		"preLaunchTask": "Build (Debug)",
 		"program": "${env:VINTAGE_STORY}/Vintagestory.exe",
 		"args": [
-			"--playStyle" , "surviveandbuild",
+			"--playStyle" , "preset-surviveandbuild",
 			"--openWorld" , "modding test world",
 			"--addModPath", "${workspaceFolder}/bin/Debug/net452",
 			"--addOrigin" , "${workspaceFolder}/resources/assets",
@@ -21,7 +21,7 @@
 		"preLaunchTask": "Build (Debug)",
 		"program": "${env:VINTAGE_STORY}/Vintagestory.exe",
 		"args": [
-			"--playStyle" , "surviveandbuild",
+			"--playStyle" , "preset-surviveandbuild",
 			"--openWorld" , "modding test world",
 			"--addModPath", "${workspaceFolder}/bin/Debug/net452",
 			"--addOrigin" , "${workspaceFolder}/resources/assets",

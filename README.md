@@ -171,7 +171,7 @@ To run the game and make it load our new mod, we'll create a **launcher**. This 
     "preLaunchTask": "Build (Debug)",
     "program": "${env:VINTAGE_STORY}/Vintagestory.exe",
     "args": [
-      "--playStyle" , "surviveandbuild",
+      "--playStyle" , "preset-surviveandbuild",
       "--openWorld" , "modding test world",
       "--addModPath", "${workspaceFolder}/bin/Debug/net452",
       "--addOrigin" , "${workspaceFolder}/resources/assets",
@@ -188,7 +188,7 @@ Note that if you're using **.NET on Windows**, you need to replace `type` with `
 These are the arguments we're passing to the game:
 
 - `--playStyle`: The world configuration preset. Only used if it doesn't exist yet.  
-  `surviveandbuild` = normal / survival. `creativebuilding` = superflat / creative.
+  `preset-surviveandbuild` = normal / survival. `creativebuilding` = superflat / creative.
 - `--openWorld`: Open or create a world with the specified name.
 - `--addModPath`: Additional paths that the game will search for mods from.
 - `--addOrigin`: Load assets from one or multiple directories.
