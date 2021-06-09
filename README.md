@@ -89,7 +89,7 @@ Setting `<Private>false</Private>` means that this `.dll` will not be copied to 
   <None Include="UNLICENSE" CopyToOutputDirectory="PreserveNewest" />
   <None Include="resources/**">
     <Link>%(RecursiveDir)%(Filename)%(Extension)</Link>
-			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
   </None>
 </ItemGroup>
 ```
