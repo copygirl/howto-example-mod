@@ -4,18 +4,18 @@ This repository will attempt to explain and demonstrate how to set up a modding 
 
 ![Overview](docs/overview.png)
 
-This how-to was last updated for Vintage Story version 1.14 but will hopefully continue working in the future.
+This how-to was last updated for Vintage Story version 1.15 but will hopefully continue working in the future.
 
-## Why .NET?
+## Why .NET 5?
 
-Vintage Story is built against .NET Framework 4.5.2 and runs using Mono on platforms other than Windows. Why are we using .NET?
+Vintage Story is built against .NET Framework 4.6.1 and runs using Mono on platforms other than Windows. Why are we using .NET 5?
 
 - It's **cross-platform**. With .NET 5, the successor of .NET Core, we don't need to change our tooling or commands to work on different platforms. I've moved from Windows to Linux while working on Vintage Story mods and only needed to make minor changes to also make it work on another platform.
 - It's **convenient**. As the .NET SDK comes with the `dotnet` command to manipulate, create and build project and solution files, we don't need to rely on IDEs. The newer `.csproj` file format doesn't require referencing every single `.cs` file, either.
 
 ## Why Visual Studio Code?
 
-Despite what its name might imply, this has nothing to do with the overblown IDE that is Visual Studio. It's a relatively light-weight, cross-platform code editor that comes with syntax highlighting, code completion, source control integration, debugging tools, ...
+Despite what its name might imply, this has nothing to do with the arguably overblown IDE that is Visual Studio. It's a relatively light-weight, cross-platform code editor that comes with syntax highlighting, code completion, source control integration, debugging tools, ...
 
 Essentially you get most of the IDE features you're used without any of the bloat, in a modern look.
 
@@ -31,11 +31,10 @@ If you're on Arch Linux like me, you can get the game using the [AUR][AUR] packa
 
 ### Environment Variables
 
-I also recommend setting up two environmental variables:
+I also recommend setting up two environmental variables, however only the former is required for this setup to work.
 
 - `VINTAGE_STORY`, which points to the where the game is installed.
-- `VINTAGE_STORY_DATA`, pointing to the user data directory.  
-  This is where world files go and also where we'll put our mods.
+- `VINTAGE_STORY_DATA`, pointing to the user data directory.
 
 Since I'm on Linux, I just add the following lines to my `~/.xprofile` (which takes effect after a restart). Of course, you have to adjust this depending on where you have installed the game.
 
@@ -54,7 +53,7 @@ Now that we're done with that, it's time to set up the project structure. Create
 
 OmniSharp gets a bit confused with Mono so if you see the following error, open your user or workspace settings (press `F1` and search for "user / workspace settings") and set "Omnisharp: Use Global Mono" to "always".
 
-> The reference assemblies for .NETFramework,Version=v4.5.2 were not found. To resolve this, install the Developer Pack (SDK/Targeting Pack) for this framework version or retarget your application.
+> The reference assemblies for .NETFramework,Version=v4.6.1 were not found. To resolve this, install the Developer Pack (SDK/Targeting Pack) for this framework version or retarget your application.
 
 ### Directory Structure
 
@@ -94,7 +93,7 @@ Setting `<Private>false</Private>` means that this `.dll` will not be copied to 
 </ItemGroup>
 ```
 
-This causes additional files to be included in the output folder (`bin/debug/net452/`) when building the project in release configuration. As you can see, you can use this to include a license file as well - remove or change this as needed for your own project. Then, we also want to include the contents of the `resources` folder.
+This causes additional files to be included in the output folder (`bin/debug/net461/`) when building the project in release configuration. As you can see, you can use this to include a license file as well - remove or change this as needed for your own project. Then, we also want to include the contents of the `resources` folder.
 
 ```xml
 <Target Name="Package" AfterTargets="PostBuildEvent" Condition="'$(Configuration)' == 'Release'">
@@ -173,7 +172,7 @@ To run the game and make it load our new mod, we'll create a **launcher**. This 
     "args": [
       "--playStyle" , "preset-surviveandbuild",
       "--openWorld" , "modding test world",
-      "--addModPath", "${workspaceFolder}/bin/Debug/net452",
+      "--addModPath", "${workspaceFolder}/bin/Debug/net461",
       "--addOrigin" , "${workspaceFolder}/resources/assets",
     ],
     "console": "internalConsole",

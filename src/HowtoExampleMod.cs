@@ -3,7 +3,7 @@ using Vintagestory.API.Common;
 using Vintagestory.API.Server;
 
 [assembly: ModInfo( "HowtoExample",
-	Description = "An example mod using VS Code and .NET Core",
+	Description = "An example mod using VS Code and .NET",
 	Website     = "https://github.com/copygirl/howto-example-mod",
 	Authors     = new []{ "copygirl" } )]
 
